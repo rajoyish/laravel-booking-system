@@ -21,5 +21,9 @@ Route::get('/', function () {
     // $employee = Employee::find(2);
     // dd($employee->services);
 
-    $availability = (new ScheduleAvailability())->forPeriod(now(), now()->addMonth());
+    $availability = (new ScheduleAvailability())
+        ->forPeriod(
+            now()->startOfDay(),
+            now()->addMonth()->endOfDay(),
+        );
 });
