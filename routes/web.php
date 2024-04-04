@@ -3,6 +3,7 @@
 use App\Bookings\ScheduleAvailability;
 use App\Models\Employee;
 use App\Models\Service;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+// Carbon::setTestNow(now()->setTimeFromTimeString('12:00'));
 
 Route::get('/', function () {
     // return view('welcome');
