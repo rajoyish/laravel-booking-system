@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 // Carbon::setTestNow(now()->setTimeFromTimeString('12:00'));
 
 Route::get('/', function () {
-    // return view('welcome');
+    return view('welcome');
     $employee = Employee::find(1);
     $service = Service::find(1);
 
