@@ -11,7 +11,7 @@ class Appointment extends Model
     use HasFactory;
 
     protected $casts = [
-        'starts_at' => 'date_time',
+        'starts_at' => 'datetime',
         'ends_at' => 'datetime',
     ];
 
@@ -22,6 +22,11 @@ class Appointment extends Model
         static::creating(function (Appointment $appointment) {
             $appointment->uuid = str()->uuid();
         });
+    }
+
+    public function cancelled()
+    {
+        return ! is_null($this->cancelled_at);
     }
 
     public function service(): BelongsTo
