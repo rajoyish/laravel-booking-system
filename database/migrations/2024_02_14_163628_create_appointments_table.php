@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('service_id')->constrained();
             $table->foreignId('employee_id')->constrained();
             $table->datetime('starts_at');
-            $table->datetime('ends _at');
+            $table->datetime('ends_at');
             $table->timestamp('cancelled_at')->nullable();
             $table->string('name');
             $table->string('email');

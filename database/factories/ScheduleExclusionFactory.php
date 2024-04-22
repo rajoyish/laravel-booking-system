@@ -17,7 +17,9 @@ class ScheduleExclusionFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'employee_id' => fake()->randomNumber(1, 10),
+            'starts_at' => '09:00:00',
+            'ends_at' => '17:00:00',
         ];
     }
 }

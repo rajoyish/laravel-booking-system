@@ -17,6 +17,9 @@ class ScheduleFactory extends Factory
     public function definition(): array
     {
         return [
+            'starts_at' => fake()->date(),
+            'ends_at' => fake()->date(),
+            'employee_id' => fake()->numberBetween(1, 10),
             'monday_starts_at' => '09:00:00',
             'monday_ends_at' => '17:00:00',
             'tuesday_starts_at' => '09:00:00',

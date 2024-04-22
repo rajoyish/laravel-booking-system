@@ -8,18 +8,7 @@ use App\Models\Service;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-Carbon::setTestNow(now()->setTimeFromTimeString('12:00'));
+Carbon::setTestNow(now()->setTimeFromTimeString('17:00:00'));
 
 Route::get('/', function () {
     $employees = Employee::get();
@@ -28,13 +17,12 @@ Route::get('/', function () {
     $availability = (new ServiceSlotAvailability($employees, $service))
         ->forPeriod(now()->startOfDay(), now()->addDay()->endOfDay());
 
-    dd($availability);
+    dd($availability->firstAvailableDate());
 
     // $generator = (new SlotRangeGenerator(now()->startOfDay(), now()->addDay()->endOfDay()));
 
     // dd($generator->generate(30));
 
-    // return view('welcome');
     // $employee = Employee::find(1);
     // $service = Service::find(1);
 
@@ -43,4 +31,6 @@ Route::get('/', function () {
     //         now()->startOfDay(),
     //         now()->addMonth()->endOfDay(),
     //     );
+
+    // return view('welcome');
 });

@@ -17,8 +17,9 @@ class ServiceFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $title = 'Hair',
+            'title' => $title = fake()->randomElement(['Hair', 'Beard', 'Spa', 'Massage']),
             'slug' => str()->slug($title),
+            'duration' => '30',
             'price' => 2000,
         ];
     }
