@@ -12,7 +12,7 @@ class BookingController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return view('booking', [
+        return view('bookings.index', [
             'employees' => Employee::get(),
         ]);
     }
