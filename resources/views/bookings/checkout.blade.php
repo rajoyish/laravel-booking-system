@@ -15,7 +15,11 @@
         </div>
         <div>
             <h2 class="text-lg font-medium mt-3">1. When for?</h2>
-            <div>calender</div>
+            <div>calender
+
+            </div>
+
         </div>
+        <h1 x-data="{ message: 'I ❤️ Alpine' }" x-text="message"></h1>
     </div>
 </x-app-layout>
