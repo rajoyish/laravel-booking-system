@@ -17,14 +17,25 @@
             <h2 class="text-lg font-medium mt-3">1. When for?</h2>
             <div x-data="{
                 picker: null,
+                availableDates: {{ json_encode($availableDates) }}
             }" x-init="this.picker = new easepick.create({
+            
                 element: $refs.date,
                 readonly: true,
                 zIndex: 50,
                 date: '{{ $firstAvailableDate }}',
                 css: [
                     'https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.css',
-                ]
+                ],
+                plugins: [
+                    'LockPlugin'
+                ],
+                LockPlugin: {
+                    minDate: new Date(),
+                    filter(date, picked) {
+                        return !Object.keys(availableDates).includes(date.format('YYYY-MM-DD'))
+                    },
+                }
             })">
                 <input x-ref="date" class="mt-6 text-sm bg-slate-100 border-0 rounded-lg px-6 py-4 w-full"
                     placeholder="Choose a date">
