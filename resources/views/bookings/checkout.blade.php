@@ -1,8 +1,12 @@
 <x-app-layout>
     <div x-data="{
         form: {
+            employee: {{ $employee->id }},
+            service: {{ $service->id }},
             date: null,
-            time: null
+            time: null,
+            name: null,
+            email: null
         }
     
     }" class="space-y-12">
@@ -90,7 +94,28 @@
                             class="py-3 px-4 text-sm border border-slate-200 rounded-lg text-center hover:bg-gray-50/75 cursor-pointer">
                         </div>
                     </template>
+                </div>
+            </div>
+        </div>
 
+        <div>
+            <h2 class="text-lg font-medium mt-3">3. Your details and book</h2>
+            <div class="mt-6">
+                <div>
+                    <label for="name" class="sr-only">Your name</label>
+                    <input x-model="form.name" type="text" name="name" id="name" placeholder="Your name"
+                        class="mt-1 text-sm bg-slate-100 border-0 rounded-lg px-6 py-4 w-full" required>
+                </div>
+                <div class="mt-3">
+                    <label for="email" class="sr-only">Your email</label>
+                    <input x-model="form.email" type="email" email="email" id="email"
+                        placeholder="Your email address"
+                        class="mt-1 text-sm bg-slate-100 border-0 rounded-lg px-6 py-4 w-full" required>
+                </div>
+                <div class="mt-6">
+                    <button type="submit"
+                        class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Make
+                        booking</button>
                 </div>
             </div>
         </div>
