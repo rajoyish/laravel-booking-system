@@ -1,25 +1,36 @@
 <x-app-layout>
-    <div x-data="{
+    <form x-on:submit.prevent="submit" x-data="{
         form: {
-            employee: {{ $employee->id }},
-            service: {{ $service->id }},
+            employee_id: {{ $employee->id }},
+            service_id: {{ $service->id }},
             date: null,
             time: null,
             name: null,
             email: null
-        }
+        },
     
+        submit() {
+            axios.post('{{ route('appointments') }}', this.form).then((response) => {
+                console.log(response.data)
+            })
+        }
     }" class="space-y-12">
         <div>
-            <h2 class="text-xl font-medium mt-3">Here's what you you're booking</h2>
+            <h2 class="text-xl font-medium mt-3">Here's what you're booking</h2>
             <div class="flex mt-6 space-x-3 bg-slate-100 rounded-lg p-4">
                 <img src="{{ $employee->profile_photo_url }}" class="rounded-lg size-14 bg-slate-100">
                 <div class="w-full">
                     <div class="flex justify-between">
-                        <div class="font-semibold ">{{ $service->title }}</div>
-                        <div class="text-sm ">{{ $service->price }}</div>
+                        <div class="font-semibold">
+                            {{ $service->title }}
+                        </div>
+                        <div class="text-sm">
+                            {{ $service->price }}
+                        </div>
                     </div>
-                    <div class="text-sm">{{ $employee->name }}</div>
+                    <div class="text-sm">
+                        {{ $employee->name }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -29,7 +40,6 @@
                 picker: null,
                 availableDates: {{ json_encode($availableDates) }}
             }" x-init="this.picker = new easepick.create({
-            
                 element: $refs.date,
                 readonly: true,
                 zIndex: 50,
@@ -45,9 +55,8 @@
                     minDate: new Date(),
                     filter(date, picked) {
                         return !Object.keys(availableDates).includes(date.format('YYYY-MM-DD'))
-                    },
+                    }
                 },
-            
                 setup(picker) {
                     picker.on('view', (e) => {
                         const { view, date, target } = e.detail
@@ -55,8 +64,10 @@
             
                         if (view === 'CalendarDay' && availableDates[dateString]) {
                             const span = target.querySelector('.day-slots') || document.createElement('span')
+            
                             span.className = 'day-slots'
                             span.innerHTML = pluralize('slot', availableDates[dateString], true)
+            
                             target.append(span)
                         }
                     })
@@ -74,7 +85,6 @@
                 <input x-ref="date" class="mt-6 text-sm bg-slate-100 border-0 rounded-lg px-6 py-4 w-full"
                     placeholder="Choose a date">
             </div>
-
         </div>
 
         <div x-data="{
@@ -86,13 +96,13 @@
             }
         }" x-on:slots-requested.window="fetchSlots(event)">
             <h2 class="text-lg font-medium mt-3">2. Choose a time slot</h2>
-            <div class="mt-6" x-show="slots.length" x-cloak>
+            <div class="mt-6" x-show="slots.length">
                 <div class="grid grid-cols-3 md:grid-cols-5 gap-8 mt-6">
                     <template x-for="slot in slots">
-                        <div x-text="slot" x-on:click="form.time = slot"
-                            x-bind:class="{ 'bg-slate-100 hover:bg-slate-100 border-slate-300': form.time === slot }"
-                            class="py-3 px-4 text-sm border border-slate-200 rounded-lg text-center hover:bg-gray-50/75 cursor-pointer">
-                        </div>
+                        <div x-text="slot"
+                            class="py-3 px-4 text-sm border border-slate-200 rounded-lg text-center hover:bg-gray-50/75 cursor-pointer"
+                            x-on:click="form.time = slot"
+                            x-bind:class="{ 'bg-slate-100 hover:bg-slate-100': form.time === slot }"></div>
                     </template>
                 </div>
             </div>
@@ -100,24 +110,25 @@
 
         <div>
             <h2 class="text-lg font-medium mt-3">3. Your details and book</h2>
-            <div x-show="form.time" class="mt-6" x-cloak>
+            <div class="mt-6" x-show="form.time" x-cloak>
                 <div>
                     <label for="name" class="sr-only">Your name</label>
-                    <input x-model="form.name" type="text" name="name" id="name" placeholder="Your name"
-                        class="mt-1 text-sm bg-slate-100 border-0 rounded-lg px-6 py-4 w-full" required>
+                    <input type="text" name="name" id="name" placeholder="Your name"
+                        class="mt-1 text-sm bg-slate-100 border-0 rounded-lg px-6 py-4 w-full" required
+                        x-model="form.name">
                 </div>
+
                 <div class="mt-3">
-                    <label for="email" class="sr-only">Your email</label>
-                    <input x-model="form.email" type="email" email="email" id="email"
-                        placeholder="Your email address"
-                        class="mt-1 text-sm bg-slate-100 border-0 rounded-lg px-6 py-4 w-full" required>
+                    <label for="email" class="sr-only">Your email address</label>
+                    <input type="email" name="email" id="email" placeholder="Your email address"
+                        class="mt-1 text-sm bg-slate-100 border-0 rounded-lg px-6 py-4 w-full" required
+                        x-model="form.email">
                 </div>
-                <div class="mt-6">
-                    <button type="submit"
-                        class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Make
-                        booking</button>
-                </div>
+
+                <button type="submit"
+                    class="mt-6 py-3 px-6 text-sm border border-slate-200 rounded-lg flex flex-col items-center justify-center text-center hover:bg-slate-900 cursor-pointer bg-slate-800 text-white font-medium">Make
+                    booking</button>
             </div>
         </div>
-    </div>
+    </form>
 </x-app-layout>
