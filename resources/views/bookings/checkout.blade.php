@@ -1,5 +1,7 @@
 <x-app-layout>
     <form x-on:submit.prevent="submit" x-data="{
+        error: null,
+    
         form: {
             employee_id: {{ $employee->id }},
             service_id: {{ $service->id }},
@@ -12,6 +14,8 @@
         submit() {
             axios.post('{{ route('appointments') }}', this.form).then((response) => {
                 console.log(response.data)
+            }).catch((error) => {
+                this.error = error.response.data.error
             })
         }
     }" class="space-y-12">
@@ -110,6 +114,9 @@
 
         <div>
             <h2 class="text-lg font-medium mt-3">3. Your details and book</h2>
+
+            <div x-show="error" x-text="error" x-cloak class="bg-slate-900 text-white py-4 px-6 rounded-lg mt-3"></div>
+
             <div class="mt-6" x-show="form.time" x-cloak>
                 <div>
                     <label for="name" class="sr-only">Your name</label>
