@@ -7,10 +7,7 @@ use App\Http\Controllers\BookingEmployeeController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ConfirmationController;
 use App\Http\Controllers\SlotController;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
-
-Carbon::setTestNow(now()->addDay()->setTimeFromTimeString('09:00:00'));
 
 Route::get('/', BookingController::class)->name('bookings');
 Route::get('/bookings/{employee:slug}', BookingEmployeeController::class)->name('bookings.employee');
