@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Appointment extends Model
 {
@@ -29,12 +28,12 @@ class Appointment extends Model
         return ! is_null($this->cancelled_at);
     }
 
-    public function service(): BelongsTo
+    public function service()
     {
         return $this->belongsTo(Service::class);
     }
 
-    public function employee(): BelongsTo
+    public function employee()
     {
         return $this->belongsTo(Employee::class);
     }

@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Appointment;
 
 class ConfirmationController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     */
-    public function __invoke(Request $request)
+    public function __invoke(Appointment $appointment)
     {
-        //
+        return view('bookings.confirmation', [
+            'appointment' => $appointment,
+        ]);
     }
 }
